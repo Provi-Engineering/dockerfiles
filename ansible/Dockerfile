@@ -1,9 +1,10 @@
 FROM ubuntu:22.04
 
 RUN apt-get update && \
-DEBIAN_FRONTEND=noninteractive apt-get -y install -y --no-install-recommends gnupg2 lsb-release software-properties-common vim curl && \
+DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends && \
+DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends gnupg2 lsb-release software-properties-common vim curl python3-pip && \
 apt-add-repository ppa:ansible/ansible && \
-DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends ansible python3-pip
+DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends ansible
 
 RUN pip install boto3
 
@@ -11,4 +12,4 @@ RUN curl -L https://github.com/aelsabbahy/goss/releases/latest/download/goss-lin
 
 COPY goss.yaml /goss.yaml
 
-CMD ["/usr/local/bin/goss", "validate"]
+CMD ["ansible"]
