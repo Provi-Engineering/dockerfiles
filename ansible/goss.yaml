@@ -1,0 +1,15 @@
+command:
+  boto:
+    exit-status: 0
+    exec: "python3 -c 'import boto3'"
+package:
+  ansible:
+    installed: true
+  gnupg2:
+    installed: true
+  lsb-release:
+    installed: true
+  python3-pip:
+    installed: true
+  software-properties-common:
+    installed: true
