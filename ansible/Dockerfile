@@ -2,7 +2,7 @@ FROM ubuntu:22.04
 
 RUN apt-get update && \
 DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends && \
-DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends gnupg2 lsb-release software-properties-common vim curl python3-pip && \
+DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends gnupg2 lsb-release software-properties-common vim curl openssh-client python3-pip && \
 apt-add-repository ppa:ansible/ansible && \
 DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends ansible
 
