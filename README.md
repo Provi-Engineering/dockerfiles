@@ -2,6 +2,8 @@
 
 To build a Docker image on a regular cadence, create a directory in this repo named as how you would like the image to be named. Include a `Dockerfile` and a `Makefile` with a target called `build`.
 
+For an example, see the `ansible` directory.
+
 ## The `build` target
 
 In your `Makefile`, the `build` target must do the following:
