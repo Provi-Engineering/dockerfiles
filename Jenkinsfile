@@ -1,8 +1,3 @@
-GIT_SHA=$(shell git log --format=%h -1 .)
-GIT_BRANCH=$(shell git rev-parse --abbrev-ref HEAD)
-ECR_REGISTRY="242369466814.dkr.ecr.us-east-2.amazonaws.com"
-ECR_IMAGE="${ECR_REGISTRY}/${PROJECT}:${GIT_SHA}"
-
 // Outputs JSON consumable credentials
 def assumeRole(String role = "role_to_be_assumed") {
   return sh(script: """
@@ -22,7 +17,7 @@ def timestamp() {
 pipeline {
   agent {
     kubernetes {
-      label 'cicd-docker'
+      label 'dockerfiles'
       defaultContainer 'jnlp'
       yaml """
 apiVersion: v1
@@ -98,6 +93,7 @@ spec:
             "AWS_SECRET_ACCESS_KEY=${creds.SecretAccessKey}",
             "AWS_SESSION_TOKEN=${creds.SessionToken}"
           ]) {
+            sh "git config --global --add safe.directory ${WORKSPACE}"
             sh "bash build-images.sh"
           }
         }
@@ -114,7 +110,7 @@ spec:
 
 
 def notifySlack() {
-  def message = "jenkins-cicd\n${currentBuild.currentResult}: <${env.RUN_DISPLAY_URL}|${env.JOB_NAME}>"
+  def message = "dockerfiles\n${currentBuild.currentResult}: <${env.RUN_DISPLAY_URL}|${env.JOB_NAME}>"
 
   if (currentBuild.currentResult != "SUCCESS") {
     slackSend(color: "danger", message: message, channel: "#alerts-devops")
