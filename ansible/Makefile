@@ -29,7 +29,7 @@ docker-build: ## build the image
 
 .PHONY: test
 test: ## run goss tests
-	docker run -it --rm ${ECR_IMAGE} goss validate -f documentation
+	docker run --rm ${ECR_IMAGE} goss validate -f documentation
 
 .PHONY: tag-latest
 tag-latest: ## docker tag the image
